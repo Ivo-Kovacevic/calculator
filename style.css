@@ -1,6 +1,6 @@
 html, body {
     margin: 0;
-    background-color: #010101;
+    background-color: #313131;
     color: #D5C1C0;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
@@ -16,8 +16,7 @@ html, body {
     padding: 0 50px;
     width: 600px;
     height: 100%;
-    border-left: 1px solid #D5C1C0;
-    border-right: 1px solid #D5C1C0;
+    background-color: #010101;
 }
 
 .display, .expression {
@@ -48,8 +47,12 @@ html, body {
 }
 
 .row > div {
-    height: 25px;
-    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    height: 30px;
+    width: 30px;
     margin: 10px;
     padding: 50px;
     border-radius: 100px;
@@ -62,17 +65,17 @@ html, body {
 }
 
 #equal {
-    background-color: #533d5f;
+    background-color: #0f581f
 }
 
 #equal:hover {
-    background-color: #6b4c7c;
+    background-color: #16802d;
 }
 
 #clear {
-    background-color: #a02020;
+    background-color: #8a1b1b;
 }
 
 #clear:hover {
-    background-color: #D92B2B;
+    background-color: #c52727;
 }
