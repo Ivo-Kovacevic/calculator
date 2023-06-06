@@ -3,7 +3,7 @@ let number2;
 let operator;
 let result;
 let firstNumber = true;
-let display = document.querySelector('.display');
+let mainDisplay = document.querySelector('.main');
 let expression = document.querySelector('.expression');
 
 function operate(operator, number1, number2) {
@@ -15,10 +15,10 @@ function operate(operator, number1, number2) {
         case '-':
             result = number1 - number2;
             break;
-        case '*':
+        case '×':
             result = number1 * number2;
             break;
-        case '/':
+        case '÷':
             result = number1 / number2;
             break;
     }
@@ -29,7 +29,7 @@ function clear(currentInput) {
     if (currentInput === 'C') {
         number1 = undefined;
         firstNumber = true;
-        display.textContent = '';
+        mainDisplay.textContent = '';
         expression.textContent = '';
         return true;
     }
@@ -37,8 +37,8 @@ function clear(currentInput) {
 
 function displayInput() {
     const currentInput = this.textContent;
-    const lastCharacter = display.textContent.charAt(display.textContent.length - 1);
-    const operators = ['+', '-', '*', '/'];
+    const lastCharacter = mainDisplay.textContent.charAt(mainDisplay.textContent.length - 1);
+    const operators = ['+', '-', '×', '÷'];
 
     // If input is 'C'
     // If display is showing result of calculation and '=' is selected again
@@ -46,7 +46,7 @@ function displayInput() {
     // If last character and current input are both operators
     if (clear(currentInput)
         || (expression.textContent === '' && currentInput === '=')
-        || (display.textContent === '' && operators.includes(currentInput))
+        || (mainDisplay.textContent === '' && operators.includes(currentInput))
         || (operators.includes(currentInput) && operators.includes(lastCharacter))) {
         return;
     } else if (operators.includes(lastCharacter)) {
@@ -56,12 +56,12 @@ function displayInput() {
     // If operator or '=' is selected then
     if (operators.includes(currentInput) || currentInput === '=') {
         if (firstNumber === true) {
-            number1 = parseFloat(display.textContent);
+            number1 = parseFloat(mainDisplay.textContent);
             firstNumber = false;
-            display.textContent += ' ' + currentInput;
+            mainDisplay.textContent += '' + currentInput;
             return;
         } else {
-            number2 = parseFloat(display.textContent);
+            number2 = parseFloat(mainDisplay.textContent);
         }
 
         if (number2 !== undefined) {
@@ -72,21 +72,21 @@ function displayInput() {
         if (currentInput === '=') {
             firstNumber = true;
             expression.textContent = '';
-            display.textContent = result;
+            mainDisplay.textContent = result;
             return;
         }
 
-        display.textContent += ' ' + currentInput;
+        mainDisplay.textContent += ' ' + currentInput;
         return;
     }
 
     // Replace the whole expression if last character is operator or only '0' is shown
     // Else add inputted number if last character is number
-    if (display.textContent === '0' || operators.includes(lastCharacter)) {
-        expression.textContent = display.textContent;
-        display.textContent = currentInput;
+    if (mainDisplay.textContent === '0' || operators.includes(lastCharacter)) {
+        expression.textContent = mainDisplay.textContent;
+        mainDisplay.textContent = currentInput;
     } else if (!(operators.includes(currentInput) && operators.includes(lastCharacter))) {
-        display.textContent +=  '' + currentInput;
+        mainDisplay.textContent +=  '' + currentInput;
     }
 }
 

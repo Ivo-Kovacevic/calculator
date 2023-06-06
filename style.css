@@ -1,6 +1,6 @@
 html, body {
     margin: 0;
-    background-color: #313131;
+    background-color: #505C68;
     color: #D5C1C0;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
@@ -9,73 +9,86 @@ html, body {
 }
 
 .container {
-    margin: 0 auto;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 0 50px;
-    width: 600px;
-    height: 100%;
-    background-color: #010101;
 }
 
-.display, .expression {
-    color: #8f807f;
-    text-align: right;
-    width: 600px;
-    height: 40px;
-    padding: 10px 50px;
-    box-sizing: border-box;
+.header {
+    background-color: #374353;
+    padding: 20px;
 }
 
 .display {
-    color: #D5C1C0;
-    height: 80px;
-    font-size: 70px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 50%;
+}
+
+.display > div {
+    text-align: right;
+}
+
+.main {
+    height: 1em;
+    box-sizing: border-box;
+    font-size: 3em;
+}
+
+.expression {
+    height: 1.5em;
+    color: #8C949F;
 }
 
 .buttons {
-    margin-top: 20px;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    background-color: #D5C1C0;
+    font-size: 1.5em;
 }
 
 .row {
+    flex: 1;
     display: flex;
-    justify-content: center;
-    width: 600px;
+}
+.row > div{
+    flex: 1;
+    padding: 10px;
 }
 
-.row > div {
+.button {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40px;
-    height: 30px;
-    width: 30px;
-    margin: 10px;
-    padding: 50px;
-    border-radius: 100px;
-    background-color: #1B1B1B;
+    background-color: #5B6A7D;
 }
-
-.row > div:hover {
-    background-color: #313131;
+.button:hover {
     cursor: pointer;
+    background-color: #6c7f97;
 }
 
-#equal {
-    background-color: #0f581f
+.operators {
+    background-color: #374353;
+}
+.operators:hover {
+    background-color: #435266;
 }
 
-#equal:hover {
-    background-color: #16802d;
+.special-operators {
+    background-color: #333A42;
+}
+.special-operators:hover {
+    background-color: #3f4750;
 }
 
 #clear {
-    background-color: #8a1b1b;
+    color: #20c49b;
 }
 
-#clear:hover {
-    background-color: #c52727;
+#equal {
+    background-color: #1daa87;
+}
+#equal:hover {
+    background-color: #20c49b;
 }

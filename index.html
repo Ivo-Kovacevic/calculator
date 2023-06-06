@@ -7,40 +7,56 @@
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="javascript.js" defer></script>
 </head>
 <body>
     <div class="container">
-        <div class="display"></div>
-        <div class="expression"></div>
+
+        <div class="display">
+            <div class="main">0</div>
+            <div class="expression"></div>
+        </div>
+        
         <div class="buttons">
             <div class="row">
-                <div class="button">+</div>
+                <div class="button operators" id="clear">C</div>
+                <div class="button operators">&#9003;</div>
+            </div>
+            <div class="row">
+                <div class="button operators">+</div>
                 <div class="button">1</div>
                 <div class="button">2</div>
                 <div class="button">3</div>
+                <div class="button special-operators">!</div>
+                <div class="button special-operators">%</div>
             </div>
             <div class="row">
-                <div class="button">-</div>
+                <div class="button operators">-</div>
                 <div class="button">4</div>
                 <div class="button">5</div>
                 <div class="button">6</div>
+                <div class="button special-operators">+/-</div>
+                <div class="button special-operators">π</div>
             </div>
             <div class="row">
-                <div class="button">*</div>
+                <div class="button operators">×</div>
                 <div class="button">7</div>
                 <div class="button">8</div>
                 <div class="button">9</div>
+                <div class="button special-operators">x&sup2;</div>
+                <div class="button special-operators">&radic;x</div>
             </div>
             <div class="row">
-                <div class="button">/</div>
-                <div class="button" id="clear">C</div>
+                <div class="button operators">÷</div>
+                <div class="button">.</div>
                 <div class="button">0</div>
                 <div class="button" id="equal">=</div>
+                <div class="button special-operators">(</div>
+                <div class="button special-operators">)</div>
             </div>
-        </div>
-    </div>
-    
 
-    <script src="javascript.js"></script>
+        </div>
+
+    </div>
 </body>
 </html>
