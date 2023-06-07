@@ -1,92 +1,84 @@
-let number1;
-let number2;
-let operator;
-let result;
-let firstNumber = true;
 let mainDisplay = document.querySelector('.main');
 let expression = document.querySelector('.expression');
 
-function operate(operator, number1, number2) {
-    let result;
-    switch (operator) {
-        case '+':
-            result = number1 + number2;
-            break;
-        case '-':
-            result = number1 - number2;
-            break;
-        case '×':
-            result = number1 * number2;
-            break;
-        case '÷':
-            result = number1 / number2;
-            break;
-    }
-    return result;
-}
-
 function clear(currentInput) {
     if (currentInput === 'C') {
-        number1 = undefined;
-        firstNumber = true;
-        mainDisplay.textContent = '';
+        mainDisplay.textContent = '0';
         expression.textContent = '';
         return true;
     }
 }
 
-function displayInput() {
-    const currentInput = this.textContent;
-    const lastCharacter = mainDisplay.textContent.charAt(mainDisplay.textContent.length - 1);
-    const operators = ['+', '-', '×', '÷'];
+function backspace(currentInput) {
+    if (currentInput === '⌫') {
+        let length = mainDisplay.textContent.length;
+        mainDisplay.textContent = mainDisplay.textContent.slice(0, length - 1);
+        return true;
+    }
+}
 
-    // If input is 'C'
-    // If display is showing result of calculation and '=' is selected again
-    // If display is empty and operator is selected
-    // If last character and current input are both operators
+function tokenize(expression) {
+    const tokens = [];
+    let token = '';
+    for (let character of expression) {
+        if ('^×÷+-'.includes(character)) {
+            tokens.push(parseFloat(token), character);
+            token = '';
+        } else {
+            token += character;
+        }
+    }
+    if (token !== '') {
+        tokens.push(parseFloat(token));
+    }
+    return tokens;
+}
+
+function calculate(tokens) {
+    let operator;
+    const operatorPrecedence = [
+        {'^': (a, b) => Math.pow(a, b)},
+        {'×': (a, b) => a * b, '÷': (a, b) => a / b},
+        {'+': (a, b) => a + b, '-': (a, b) => a - b}];
+    for (let operators of operatorPrecedence) {
+        let newTokens = [];
+        for (let token of tokens) {
+            if (token in operators) {
+                operator = operators[token];
+            } else if (operator) {
+                newTokens[newTokens.length - 1] = operator(newTokens[newTokens.length - 1], token);
+                operator = null;
+            } else {
+                newTokens.push(token);
+            }
+        }
+        tokens = newTokens;
+    }
+    return tokens[0];
+}
+
+function displayInput() {
+    let string;
+    let currentInput = this.textContent;
+    let lastCharacter = mainDisplay.textContent.charAt(mainDisplay.textContent.length - 1);
+    const operators = ['+', '-', '×', '÷', '^'];
+
+    // Stop executing if clear(), backspace() or if it would result with stacking operators
     if (clear(currentInput)
-        || (expression.textContent === '' && currentInput === '=')
-        || (mainDisplay.textContent === '' && operators.includes(currentInput))
+        || backspace(currentInput)
+        || (operators.includes(currentInput) && (mainDisplay.textContent === '' || mainDisplay.textContent === '0'))
         || (operators.includes(currentInput) && operators.includes(lastCharacter))) {
         return;
-    } else if (operators.includes(lastCharacter)) {
-        operator = lastCharacter;
     }
 
-    // If operator or '=' is selected then
-    if (operators.includes(currentInput) || currentInput === '=') {
-        if (firstNumber === true) {
-            number1 = parseFloat(mainDisplay.textContent);
-            firstNumber = false;
-            mainDisplay.textContent += '' + currentInput;
-            return;
-        } else {
-            number2 = parseFloat(mainDisplay.textContent);
-        }
-
-        if (number2 !== undefined) {
-            result = operate(operator, number1, number2);
-            number1 = result;
-        }
-        
-        if (currentInput === '=') {
-            firstNumber = true;
-            expression.textContent = '';
-            mainDisplay.textContent = result;
-            return;
-        }
-
-        mainDisplay.textContent += ' ' + currentInput;
-        return;
-    }
-
-    // Replace the whole expression if last character is operator or only '0' is shown
-    // Else add inputted number if last character is number
-    if (mainDisplay.textContent === '0' || operators.includes(lastCharacter)) {
-        expression.textContent = mainDisplay.textContent;
+    if (currentInput === '=') {
+        string = mainDisplay.textContent;
+        expression.textContent = string;
+        mainDisplay.textContent = calculate(tokenize(string));
+    } else if (mainDisplay.textContent === '0') {
         mainDisplay.textContent = currentInput;
-    } else if (!(operators.includes(currentInput) && operators.includes(lastCharacter))) {
-        mainDisplay.textContent +=  '' + currentInput;
+    } else {
+        mainDisplay.textContent += '' + currentInput;
     }
 }
 
